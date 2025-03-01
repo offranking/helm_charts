@@ -1,0 +1,13 @@
+---
+releases:
+  - name: myankit
+    chart: ./helloworld
+    installed: true
+
+  - name: python
+    chart: ./python-flask-rest-api-project-main
+    installed: true
+
+  - name: helloworldankittest
+    chart: ./helloworld
+    installed: false
