@@ -1,0 +1,6 @@
+---
+releases:
+
+  - name: helloworldankittest
+    chart: ../helloworld
+    installed: true 
