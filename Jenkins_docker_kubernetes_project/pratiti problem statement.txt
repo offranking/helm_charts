@@ -1,0 +1,132 @@
+Below is a mock test problem statement:
+
+What you will learn
+By the end of this, you will be able to:
+
+Learn to containerize a Java application along with its MySQL database to ensure consistent deployment.
+Set up a Jenkins pipeline to automate the build, test, and deployment processes, ensuring faster and more reliable delivery.
+Deploy and manage the application using Kubernetes, ensuring scalability, high availability, and fault tolerance.
+What you will be provided
+A Linux Virtual Machine with the necessary software, including Visual Studio Code, Kubectl, Docker, Maven, Minikube, Jenkins, and Java libraries, is available in the lab.
+The project folder, containing the required files, is located at Desktop > Project.
+What you need to know
+Familiarity with Docker, including building and running containers.
+Basic understanding of Continuous Integration and Continuous Deployment workflows using Jenkins.
+Knowledge of MySQL database operations, including schema creation, queries, and connecting to applications.
+Familiarity with Kubernetes components such as Pods, Deployments, Services, and Secrets.
+Some experience with Java, Maven, Linux, and Git.
+Skill Tags
+Docker
+Jenkins
+Git
+MySQL
+Java
+Maven
+Docker Hub
+Kubernetes
+What you will do
+
+You are tasked with deploying a web application to a Kubernetes cluster for a growing startup company. The application needs to be containerized for consistent deployment and scalability. As the DevOps engineer, you will set up the environment, containerize the application, and deploy it to Kubernetes, ensuring high availability and fault tolerance. You will also integrate essential tools like Jenkins, Maven, and Git to streamline the process.
+
+Note: Users must log in to their GitHub and Docker Hub accounts using their credentials.
+Activities
+
+1. Setting Up Environment
+
+
+
+Install Maven using the commands below:
+sudo apt update
+sudo apt install maven
+
+You can find the details of the Jenkins credentials and MySQL database local passwords in the Readme.txt file on the Desktop.
+
+Add Jenkins to the Docker group and restart Jenkins.
+Note:
+Use the docker compose command instead of the legacy docker-compose, as it is integrated into Docker CLI (v20.10+), providing better performance, consistency, and active maintenance, unlike the legacy command.
+
+2. Building the Docker Image and docker-compose.yaml
+
+
+
+Navigate to the Project folder on the Desktop. Open the Dockerfile using Visual Studio Code in the VM lab.
+
+Build the project using maven:3.9.9-eclipse-temurin-17.
+
+Run the project using openjdk:17-jdk-slim.
+
+Expose the application port on port 8081.
+
+Build the image with the name “todo-application-image” and tag latest.
+
+In the docker-compose.yaml, the service names and container names of the components should be todo-application and mysql-db.
+
+The local host port and container port should be 8082:8081 for the todo-application service.
+
+Use “root” as the username and “Root@123” as password for mysql server.
+
+Create a custom bridge network named todo-network.
+
+Use database name as “tododb”.
+
+The local host port and container port should be 3307:3306 for the mysql-db service.
+
+Use volumes to persist data. The volume name should be “mysql-data”.
+Create a repository with the name “todo-application” in Docker Hub using this link.
+
+3. Setting Up GitHub Repository and Docker Hub
+
+Nuvelabs123$
+
+Create a public repository in your personal GitHub account using the provided link.
+
+Ensure the repository is publicly accessible. If it is private, generate a Personal Access Token (PAT) to access it. Update the changes in the Jenkinsfile with the GitHub credentials. The project should be in the master branch.
+
+Once all updates with your Docker Hub and GitHub details are complete, clone the application folder or project folder to the GitHub repository created earlier using the Linux terminal.
+
+4. Configuring Jenkins Pipeline
+
+
+
+Go to Manage Jenkins > Credentials > Global > Add Credentials.
+Add your Docker Hub credentials and save them with the ID “docker-hub-credentials.”
+If the GitHub repository created is private, you will need to add the credentials for GitHub.
+Create a new Jenkins pipeline named "todo-application-pipeline".
+Clone the repository from GitHub and build the project with Maven by skipping tests.
+Build and push the Docker image to Docker Hub using Docker Hub credentials.
+Deploy the application using Docker Compose and verify the services.
+Clean the workspace using “rm -rf *”.
+Once the Jenkinsfile is configured, clone the repository into the previously created GitHub repository.
+After a successful build, the Maven app will be visible on port 8082 in Chrome within the VM lab.
+5. Deploy the application using Kubernetes
+
+Start Minikube.
+
+Navigate to the Project folder, where you can find todo-application-deployment.yaml and mysql-deployment.yaml files.
+
+You can use these files as they are preconfigured as part of the assessment.
+
+Create a secret in kubectl with the name “my-registry-secret” to hold the details of Docker Hub credentials.
+
+Replace the image details with the details of your Docker Hub repository.
+
+Expose Node port 30080.
+
+Apply the files and the application can be available on http://<minikube-ip>:30080.
+
+Test Cases:
+
+Checking if the user 'jenkins' is part of the 'docker' group. [5 marks]
+Checking if the Docker image ‘todo-application-image’ is created. [5 marks]
+Checking if the Docker image 'todo-application-image' is tagged correctly with latest. [5 marks]
+Checking if the Docker volume 'mysql-data' is created after executing the Jenkins pipeline. [5 marks]
+Checking if the Docker network 'todo-network' is created after executing the Jenkins pipeline. [5 marks]
+Checking if the application created as part of the Jenkins pipeline execution is active in the Docker container. [10 marks]
+Checking if the MySQL database container 'mysql-db-1' was created and exists as part of the Jenkins pipeline execution. [5 marks]
+Checking if the To-Do application container 'todo-application-1' was created and exists as part of the Jenkins pipeline execution. [5 marks]
+Checking if the Kubernetes secret with the name 'my-registry-secret' exists. [5 marks]
+Checking if the application is running on Minikube at port 30080. [10 marks]
+Checking if the application hosted on Minikube at port 30080 serves the expected content. [15 marks]
+Checking if the latest build of 'todo-application-pipeline' is successful. [10 marks]
+Checking if all required application pods are in a Running state. [10 marks]
+Checking if the database 'tododb' exists in the MySQL container. [5 marks]

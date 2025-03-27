@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+    stages {
+        stage('Docker volume') {
+            steps {
+                // sh 'docker network rm todo-network'
+                // sh 'docker volume rm mysql-data'
+                // sh 'docker stop todo-app'
+                // sh 'docker rm todo-app'
+                sh 'docker volume create mysql-data'
+            }
+        }
+        stage('Docker network') {
+            steps {
+                sh 'docker network create todo-network'
+                sh 'docker run -d --name todo-app -p 8082:8081 todo-application:latest'
+            }
+        }
+        stage('Docker application') {
+            steps {
+                sh 'docker rm -f todoapp'
+                sh 'docker stop todo-app'
+                sh 'docker rm todo-app'
+                sh 'docker ps -a --filter "name=todoapp" --format "{{.ID}}" | xargs -r docker rm -f'
+                sh 'docker ps -a --filter "name=TodoApp" --format "{{.ID}}" | xargs -r docker rm -f'
+                sh 'docker run -d --name todo-application-1 -p 8083:8081 todo-application:latest'
+            }
+        }
+        stage('mysql db') {
+            steps {
+                sh 'docker run -d --name mysql-db-1 \
+  --network todo-network \
+  -e MYSQL_ROOT_PASSWORD=Root@123 \
+  -e MYSQL_DATABASE=tododb \
+  -e MYSQL_USER=root \
+  -e MYSQL_PASSWORD=Root@123 \
+  -p 3307:3306 \
+  -v mysql-data:/var/lib/mysql \
+  mysql:5.7'
+            }
+        }
+    }
+}
