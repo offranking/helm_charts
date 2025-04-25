@@ -24,7 +24,3 @@ helm install <release-name> --dry-run --debug <chart-name>
 
 ### helmfile 
 used to manage multiple helm charts along with easier installations & uninstallations
-
-### Links  
-https://www.youtube.com/watch?v=DQk8HOVlumI
-https://jhooq.com/helmfile-manage-helmchart/
