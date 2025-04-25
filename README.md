@@ -4,7 +4,7 @@ This document provides a set of commonly used **Helm** commands along with an in
 
 ## Helm Commands
 
-### 📌 Installing and Managing Helm Charts
+###  Installing and Managing Helm Charts
 ```sh
 helm install <release-name> <chart-name>
 helm upgrade <release-name> <chart-name>
@@ -12,7 +12,7 @@ helm rollback <release-name> <chart-name>
 helm uninstall <chart-name>
 ```
 
-### 📌 Chart Management
+###  Chart Management
 ```
 helm create <chart-name>       # Create a new Helm chart
 helm list -a                   # List all installed Helm releases
@@ -22,9 +22,9 @@ helm lint <chart-name>          # Validate the Helm chart
 helm install <release-name> --dry-run --debug <chart-name>
 ```
 
-### 📌helmfile 
-used to managemultiple helm charts along with easier installation & uninstallations
+### helmfile 
+used to manage multiple helm charts along with easier installations & uninstallations
 
-### 📌Links  
+### Links  
 https://www.youtube.com/watch?v=DQk8HOVlumI
 https://jhooq.com/helmfile-manage-helmchart/
